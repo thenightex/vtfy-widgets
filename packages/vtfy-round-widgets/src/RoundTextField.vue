@@ -17,11 +17,14 @@
       outlined
       single-line
       dense
+      :append-icon="type === 'password' ? (showText ? 'mdi-eye' : 'mdi-eye-off') : ''"
+      :type="computedType"
       :readonly="readonly"
       :disabled="disabled"
       :rules="rules"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
+      @click:append="showText = !showText"
     ></v-text-field>
   </div>
 </template>
@@ -35,11 +38,24 @@ export default {
     'readonly',
     'disabled',
     'rules',
+    'type',
   ],
   data() {
     return {
       isActive: false,
+      showText: false,
     };
+  },
+  computed: {
+    computedType() {
+      if (this.type && this.type !== '') {
+        if (this.type === 'password') {
+          return this.showText ? 'text' : 'password';
+        }
+        return this.type;
+      }
+      return 'text';
+    },
   },
   methods: {
     setFocus(e) {
