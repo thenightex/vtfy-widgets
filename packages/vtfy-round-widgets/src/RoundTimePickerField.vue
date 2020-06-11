@@ -35,6 +35,8 @@
           :rules="rules"
           :label="placeholder"
           @focus="setFocus(true)"
+          @keydown.enter="saveTextfield"
+          @keydown.tab="saveTextfield"
           @blur="saveTextfield && setFocus(false)"
         ></v-text-field>
         <v-text-field
@@ -52,6 +54,8 @@
           :required="required"
           :label="placeholder"
           @focus="setFocus(true)"
+          @keydown.enter="saveTextfield"
+          @keydown.tab="saveTextfield"
           @blur="saveTextfield && setFocus(false)"
         ></v-text-field>
       </template>
@@ -81,6 +85,7 @@ export default {
     'rules',
     'noicon',
     'label',
+    'outputFormat',
   ],
   data: () => ({
     isActive: false,
@@ -103,7 +108,11 @@ export default {
       },
       set(val) {
         if (val && typeof val === 'string' && this.regex1.test(val)) {
-          this.$emit('input', this.parseTime(val, 'x'));
+          if (this.outputFormat) {
+            this.$emit('input', this.parseTime(val, this.outputFormat));
+          } else {
+            this.$emit('input', this.parseTime(val, 'x'));
+          }
           this.$emit('change', 'changed');
         }
       },
@@ -120,8 +129,15 @@ export default {
     setFocus(e) {
       this.isActive = e;
     },
+    hideMenu() {
+      this.menu = false;
+    },
     formatTime(time) {
       if (!time) return null;
+      const regex = /^(0[0-9]|1[0-9]|2[0-3]|[0-9]):[0-5][0-9]$/;
+      if (regex.test(time)) {
+        return time;
+      }
       return moment(time, 'x').format('HH:mm');
     },
     parseTime(time, format) {
@@ -136,7 +152,7 @@ export default {
     },
     saveTextfield() {
       const result = this.parseTime(this.timestring, 'HH:mm');
-      this.date = result;
+      this.time = result;
     },
   },
 };

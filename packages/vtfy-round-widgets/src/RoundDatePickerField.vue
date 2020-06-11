@@ -2,6 +2,7 @@
   <div class="n-date-field" :class="{ 'n-date-field--active': isActive }">
     <span
       v-if="label"
+      ref="label"
       class="n-date-field-label"
       :class="{
         'n-date-field-label--active': isActive,
@@ -36,6 +37,8 @@
           :rules="rules"
           :label="placeholder"
           @focus="setFocus(true)"
+          @keydown.enter="saveTextfield"
+          @keydown.tab="saveTextfield"
           @blur="saveTextfield && setFocus(false)"
         ></v-text-field>
         <v-text-field
@@ -53,6 +56,8 @@
           :rules="rules"
           :label="placeholder"
           @focus="setFocus(true)"
+          @keydown.enter="saveTextfield"
+          @keydown.tab="saveTextfield"
           @blur="saveTextfield && setFocus(false)"
         ></v-text-field>
       </template>
@@ -90,6 +95,7 @@ export default {
     'allowedDates',
     'pickerDate',
     'label',
+    'outputFormat',
   ],
   data: () => ({
     isActive: false,
@@ -110,7 +116,11 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit('input', this.parseDate(val, 'x'));
+        if (this.outputFormat) {
+          this.$emit('input', this.parseDate(val, this.outputFormat));
+        } else {
+          this.$emit('input', this.parseDate(val, 'x'));
+        }
         this.$emit('change', 'changed');
       },
     },
