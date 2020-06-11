@@ -11,7 +11,8 @@
       {{ label }}
     </span>
     <v-textarea
-      v-model="value"
+      v-bind:value="value"
+      v-on:input="$emit('input', $event)"
       hide-details="auto"
       outlined
       single-line
