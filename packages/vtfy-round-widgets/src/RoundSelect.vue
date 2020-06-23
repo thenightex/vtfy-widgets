@@ -24,7 +24,8 @@
       :rules="rules"
       :item-text="itemText"
       :item-value="itemValue"
-      :menu-props="menu-props"
+      :menu-props="menuProps"
+      :attach="attach"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
     ></v-select>
@@ -44,7 +45,8 @@ export default {
     'rules',
     'itemText',
     'itemValue',
-    'menu-props',
+    'menuProps',
+    'attach',
   ],
   data() {
     return {
