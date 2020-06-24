@@ -17,6 +17,7 @@
       transition="scale-transition"
       offset-y
       full-width
+      :attach="attach"
       :close-on-content-click="false"
       :nudge-right="40"
       :readonly="readonly || disabled"
@@ -86,6 +87,7 @@ export default {
     'noicon',
     'label',
     'outputFormat',
+    'attach',
   ],
   data: () => ({
     isActive: false,
@@ -165,6 +167,8 @@ export default {
 
 <style lang="sass">
   .n-time-field
+    legend
+      width: 0
     .v-text-field.v-input--dense .v-input__prepend-inner .v-input__icon > .v-icon,
     .v-text-field.v-input--dense .v-input__append-inner .v-input__icon > .v-icon
       margin-top: 0

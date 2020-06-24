@@ -26,6 +26,8 @@
       :item-value="itemValue"
       :menu-props="menuProps"
       :attach="attach"
+      :offset-overflow="offsetOverflow"
+      :top="top"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
     ></v-select>
@@ -68,6 +70,8 @@ export default {
 
 <style lang="sass">
   .n-select
+    legend
+      width: 0
     .v-text-field.v-input--dense .v-input__prepend-inner .v-input__icon > .v-icon,
     .v-text-field.v-input--dense .v-input__append-inner .v-input__icon > .v-icon
       margin-top: 0

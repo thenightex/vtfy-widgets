@@ -59,6 +59,8 @@ export default {
 
 <style lang="sass">
   .n-text-area
+    legend
+      width: 0
     .v-text-field
       .v-text-field--enclosed:not(.v-text-field--rounded) > .v-input__control > .v-input__slot
         padding: 0 13px

@@ -69,3 +69,9 @@ export default {
   .n-text-field-label
     font-size: 12px
 </style>
+
+<style lang="sass">
+  .n-text-field
+    legend
+      width: 0
+</style>
