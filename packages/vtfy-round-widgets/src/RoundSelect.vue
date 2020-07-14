@@ -26,8 +26,6 @@
       :item-value="itemValue"
       :menu-props="menuProps"
       :attach="attach"
-      :offset-overflow="offsetOverflow"
-      :top="top"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
     ></v-select>

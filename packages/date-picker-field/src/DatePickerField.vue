@@ -7,6 +7,7 @@
       transition="scale-transition"
       offset-y
       full-width
+      :attach="attach"
       :close-on-content-click="false"
       :nudge-right="40"
       :readonly="readonly || disabled"
@@ -69,6 +70,7 @@ export default {
     'max',
     'allowedDates',
     'pickerDate',
+    'attach',
   ],
   data: () => ({
     menu: false,

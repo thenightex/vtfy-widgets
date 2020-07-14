@@ -2,6 +2,7 @@
   <div class="n-time-field" :class="{ 'n-time-field--active': isActive }">
     <span
       v-if="label"
+      ref="label"
       class="n-time-field-label"
       :class="{
         'n-time-field-label--active': isActive,
@@ -36,9 +37,7 @@
           :rules="rules"
           :label="placeholder"
           @focus="setFocus(true)"
-          @keydown.enter="saveTextfield"
-          @keydown.tab="saveTextfield"
-          @blur="saveTextfield && setFocus(false)"
+          @blur="setFocus(false)"
         ></v-text-field>
         <v-text-field
           v-else
@@ -51,13 +50,11 @@
           dense
           :prepend-inner-icon="noicon == '' ? null : 'mdi-clock-outline'"
           :rules="rules"
-          :readonly="readonly || disabled"
-          :required="required"
           :label="placeholder"
           @focus="setFocus(true)"
           @keydown.enter="saveTextfield"
           @keydown.tab="saveTextfield"
-          @blur="saveTextfield && setFocus(false)"
+          @blur="blur"
         ></v-text-field>
       </template>
       <v-time-picker
@@ -82,7 +79,6 @@ export default {
     'placeholder',
     'readonly',
     'disabled',
-    'required',
     'rules',
     'noicon',
     'label',
@@ -155,6 +151,10 @@ export default {
     saveTextfield() {
       const result = this.parseTime(this.timestring, 'HH:mm');
       this.time = result;
+    },
+    blur() {
+      this.saveTextfield();
+      this.setFocus(false);
     },
   },
 };

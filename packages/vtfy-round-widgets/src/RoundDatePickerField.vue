@@ -34,13 +34,10 @@
           single-line
           dense
           :prepend-inner-icon="noicon == '' ? null : 'mdi-calendar-blank-outline'"
-          :required="required"
           :rules="rules"
           :label="placeholder"
           @focus="setFocus(true)"
-          @keydown.enter="saveTextfield"
-          @keydown.tab="saveTextfield"
-          @blur="saveTextfield && setFocus(false)"
+          @blur="setFocus(false)"
         ></v-text-field>
         <v-text-field
           v-else
@@ -52,14 +49,12 @@
           single-line
           dense
           :prepend-inner-icon="noicon == '' ? null : 'mdi-calendar-blank-outline'"
-          :readonly="readonly || disabled"
-          :required="required"
           :rules="rules"
           :label="placeholder"
           @focus="setFocus(true)"
           @keydown.enter="saveTextfield"
           @keydown.tab="saveTextfield"
-          @blur="saveTextfield && setFocus(false)"
+          @blur="blur"
         ></v-text-field>
       </template>
       <v-date-picker
@@ -88,7 +83,6 @@ export default {
     'placeholder',
     'readonly',
     'disabled',
-    'required',
     'rules',
     'noicon',
     'min',
@@ -180,6 +174,10 @@ export default {
       } else {
         this.date = result;
       }
+    },
+    blur() {
+      this.saveTextfield();
+      this.setFocus(false);
     },
   },
 };
