@@ -22,6 +22,7 @@
       :rules="rules"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
+      @click="$emit('click', $event)"
     ></v-textarea>
   </div>
 </template>
@@ -44,6 +45,7 @@ export default {
   methods: {
     setFocus(e) {
       this.isActive = e;
+      this.$emit('focus', e);
     },
   },
 };

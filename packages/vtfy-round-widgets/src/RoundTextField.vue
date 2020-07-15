@@ -25,6 +25,7 @@
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       @click:append="showText = !showText"
+      @click="$emit('click', $event)"
     ></v-text-field>
   </div>
 </template>
@@ -60,6 +61,7 @@ export default {
   methods: {
     setFocus(e) {
       this.isActive = e;
+      this.$emit('focus', e);
     },
   },
 };

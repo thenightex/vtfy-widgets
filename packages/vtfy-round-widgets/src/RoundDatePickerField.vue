@@ -38,6 +38,7 @@
           :label="placeholder"
           @focus="setFocus(true)"
           @blur="setFocus(false)"
+          @click="$emit('click', $event)"
         ></v-text-field>
         <v-text-field
           v-else
@@ -55,6 +56,7 @@
           @keydown.enter="saveTextfield"
           @keydown.tab="saveTextfield"
           @blur="blur"
+          @click="$emit('click', $event)"
         ></v-text-field>
       </template>
       <v-date-picker
