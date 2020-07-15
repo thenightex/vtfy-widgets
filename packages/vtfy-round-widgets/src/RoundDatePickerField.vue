@@ -131,6 +131,7 @@ export default {
   methods: {
     setFocus(e) {
       this.isActive = e;
+      this.$emit('focus', e);
     },
     formatDate(date) {
       const regex = /[0-9]{4}-[0-9]{2}-[0-9]{2}/;

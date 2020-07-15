@@ -126,6 +126,7 @@ export default {
   methods: {
     setFocus(e) {
       this.isActive = e;
+      this.$emit('focus', e);
     },
     hideMenu() {
       this.menu = false;
