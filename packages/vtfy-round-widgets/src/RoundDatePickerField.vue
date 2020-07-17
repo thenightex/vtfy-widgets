@@ -162,7 +162,10 @@ export default {
         return moment(date, 'DD.MM.').format(format);
       }
       const dateObject = moment(date, 'x');
-      return dateObject.format(format);
+      if (dateObject.isValid()) {
+        return dateObject.format(format);
+      }
+      return null;
     },
     saveTextfield() {
       const result = this.parseDate(this.datestring, 'YYYY-MM-DD');

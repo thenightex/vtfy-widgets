@@ -149,7 +149,10 @@ export default {
         return moment(time, 'HH:mm').format(format);
       }
       const timeObject = moment(time, 'x');
-      return timeObject.format(format);
+      if (timeObject.isValid()) {
+        return timeObject.format(format);
+      }
+      return null;
     },
     saveTextfield() {
       const result = this.parseTime(this.timestring, 'HH:mm');
