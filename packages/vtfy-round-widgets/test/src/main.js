@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/es5';
 import VtfyRoundWidgets from '../../dist/vtfy-round-widgets';
-import App from './App.vue'
+import App from './App.vue';
 import '@mdi/font/css/materialdesignicons.css';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 // register lib
 Vue.use(VtfyRoundWidgets);

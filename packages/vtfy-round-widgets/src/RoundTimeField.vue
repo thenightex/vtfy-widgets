@@ -11,63 +11,37 @@
     >
       {{ label }}
     </span>
-    <v-menu
-      v-model="menu"
-      ref="menu"
-      min-width="290px"
-      transition="scale-transition"
-      offset-y
-      full-width
-      :attach="attach"
-      :close-on-content-click="false"
-      :nudge-right="40"
-      :readonly="readonly || disabled"
-    >
-      <template v-slot:activator="{ on }">
-        <v-text-field
-          v-if="readonly || disabled"
-          v-model="timestring"
-          slot="activator"
-          hide-details="auto"
-          readonly
-          outlined
-          single-line
-          dense
-          :prepend-inner-icon="noicon == '' ? null : 'mdi-clock-outline'"
-          :rules="rules"
-          :label="placeholder"
-          @focus="setFocus(true)"
-          @blur="setFocus(false)"
-          @click="$emit('click', $event)"
-        ></v-text-field>
-        <v-text-field
-          v-else
-          v-model="timestring"
-          v-on="on"
-          slot="activator"
-          hide-details="auto"
-          outlined
-          single-line
-          dense
-          :prepend-inner-icon="noicon == '' ? null : 'mdi-clock-outline'"
-          :rules="rules"
-          :label="placeholder"
-          @focus="setFocus(true)"
-          @keydown.enter="saveTextfield"
-          @keydown.tab="saveTextfield"
-          @blur="blur"
-          @click="$emit('click', $event)"
-        ></v-text-field>
-      </template>
-      <v-time-picker
-        v-model="time"
-        format="24hr"
-        locale="de-de"
-        full-width
-        :readonly="readonly || disabled"
-        @input="menu = false"
-      ></v-time-picker>
-    </v-menu>
+    <v-text-field
+      v-if="readonly || disabled"
+      v-model="timestring"
+      hide-details="auto"
+      type="time"
+      readonly
+      outlined
+      single-line
+      dense
+      :rules="rules"
+      :label="placeholder"
+      @focus="setFocus(true)"
+      @blur="setFocus(false)"
+      @click="$emit('click', $event)"
+    ></v-text-field>
+    <v-text-field
+      v-else
+      v-model="timestring"
+      hide-details="auto"
+      type="time"
+      outlined
+      single-line
+      dense
+      :rules="rules"
+      :label="placeholder"
+      @focus="setFocus(true)"
+      @keydown.enter="saveTextfield"
+      @keydown.tab="saveTextfield"
+      @blur="blur"
+      @click="$emit('click', $event)"
+    ></v-text-field>
   </div>
 </template>
 
@@ -75,17 +49,15 @@
 import moment from 'moment';
 
 export default {
-  name: 'TimePickerField',
+  name: 'RoundTimeField',
   props: [
     'value',
     'placeholder',
     'readonly',
     'disabled',
     'rules',
-    'noicon',
     'label',
     'outputFormat',
-    'attach',
   ],
   data: () => ({
     isActive: false,
@@ -107,13 +79,14 @@ export default {
         return this.value;
       },
       set(val) {
-        if (this.outputFormat) {
-          this.$emit('input', this.parseTime(val, this.outputFormat));
-        } else {
-          this.$emit('input', this.parseTime(val, 'x'));
+        if (val && typeof val === 'string' && this.regex1.test(val)) {
+          if (this.outputFormat) {
+            this.$emit('input', this.parseTime(val, this.outputFormat));
+          } else {
+            this.$emit('input', this.parseTime(val, 'x'));
+          }
+          this.$emit('change', 'changed');
         }
-        if (val) this.timestring = this.formatTime(val);
-        this.$emit('change', 'changed');
       },
     },
   },

@@ -11,67 +11,37 @@
     >
       {{ label }}
     </span>
-    <v-menu
-      v-model="menu"
-      ref="menu"
-      min-width="290px"
-      transition="scale-transition"
-      offset-y
-      full-width
-      :attach="attach"
-      :close-on-content-click="false"
-      :nudge-right="40"
-      :readonly="readonly || disabled"
-    >
-      <template v-slot:activator="{ on }">
-        <v-text-field
-          v-if="readonly || disabled"
-          v-model="datestring"
-          slot="activator"
-          hide-details="auto"
-          readonly
-          outlined
-          single-line
-          dense
-          :prepend-inner-icon="noicon == '' ? null : 'mdi-calendar-blank-outline'"
-          :rules="rules"
-          :label="placeholder"
-          @focus="setFocus(true)"
-          @blur="setFocus(false)"
-          @click="$emit('click', $event)"
-        ></v-text-field>
-        <v-text-field
-          v-else
-          v-model="datestring"
-          v-on="on"
-          slot="activator"
-          hide-details="auto"
-          outlined
-          single-line
-          dense
-          :prepend-inner-icon="noicon == '' ? null : 'mdi-calendar-blank-outline'"
-          :rules="rules"
-          :label="placeholder"
-          @focus="setFocus(true)"
-          @keydown.enter="saveTextfield"
-          @keydown.tab="saveTextfield"
-          @blur="blur"
-          @click="$emit('click', $event)"
-        ></v-text-field>
-      </template>
-      <v-date-picker
-        v-model="date"
-        locale="de-de"
-        first-day-of-week="1"
-        no-title
-        scrollable
-        :min="min"
-        :max="max"
-        :readonly="readonly || disabled"
-        :allowed-dates="allowedDates"
-        @input="menu = false"
-      ></v-date-picker>
-    </v-menu>
+    <v-text-field
+      v-if="readonly || disabled"
+      v-model="datestring"
+      hide-details="auto"
+      type="date"
+      readonly
+      outlined
+      single-line
+      dense
+      :rules="rules"
+      :label="placeholder"
+      @focus="setFocus(true)"
+      @blur="setFocus(false)"
+      @click="$emit('click', $event)"
+    ></v-text-field>
+    <v-text-field
+      v-else
+      v-model="datestring"
+      hide-details="auto"
+      type="date"
+      outlined
+      single-line
+      dense
+      :rules="rules"
+      :label="placeholder"
+      @focus="setFocus(true)"
+      @keydown.enter="saveTextfield"
+      @keydown.tab="saveTextfield"
+      @blur="blur"
+      @click="$emit('click', $event)"
+    ></v-text-field>
   </div>
 </template>
 
@@ -79,21 +49,19 @@
 import moment from 'moment';
 
 export default {
-  name: 'RoundDatePickerField',
+  name: 'RoundDateField',
   props: [
     'value',
     'placeholder',
     'readonly',
     'disabled',
     'rules',
-    'noicon',
     'min',
     'max',
     'allowedDates',
     'pickerDate',
     'label',
     'outputFormat',
-    'attach',
   ],
   data: () => ({
     isActive: false,
@@ -119,7 +87,6 @@ export default {
         } else {
           this.$emit('input', this.parseDate(val, 'x'));
         }
-        if (val) this.datestring = this.formatDate(val);
         this.$emit('change', 'changed');
       },
     },
