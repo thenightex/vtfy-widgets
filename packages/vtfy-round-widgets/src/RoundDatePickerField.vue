@@ -119,7 +119,7 @@ export default {
         } else {
           this.$emit('input', this.parseDate(val, 'x'));
         }
-        if (val) this.datestring = this.formatDate(val);
+        this.datestring = this.formatDate(val);
         this.$emit('change', 'changed');
       },
     },

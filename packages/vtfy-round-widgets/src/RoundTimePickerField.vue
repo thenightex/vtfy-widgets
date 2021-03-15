@@ -112,7 +112,7 @@ export default {
         } else {
           this.$emit('input', this.parseTime(val, 'x'));
         }
-        if (val) this.timestring = this.formatTime(val);
+        this.timestring = this.formatTime(val);
         this.$emit('change', 'changed');
       },
     },
